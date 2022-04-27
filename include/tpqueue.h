@@ -10,54 +10,45 @@ struct ITEM {
     T value;
     ITEM* next;
 };
-ITEM* next;
-ITEM* tail;
+ITEM* head;
 
  public:
-    TPQueue() :tail(nullptr) {}
+    TPQueue() :head(nullptr), tail(nullptr) {}
 
 T pop() {
-    ITEM* temp = tail;
-    tail = tail->next;
+    ITEM* temp = head;
+    head = head->next;
     return (temp->value);
 }
 
 void push(T symb) {
-    ITEM* head = tail;
-    if (head == nullptr) {
-        head = new ITEM;
-        tail = head;
-        head->value = symb;
-        head->next = nullptr;
+    ITEM* tail = head;
+    if (tail == nullptr) {
+        tail = new ITEM;
+        head = tail;
+        tail->value = symb;
+        tail->next = nullptr;
     } else {
         ITEM* elm = new ITEM;
         elm->value = symb;
-        if (tail->value.prior < elm->value.prior) {
-            elm->next = head;
-            tail = elm;
+        if (head->value.prior < elm->value.prior) {
+            elm->next = tail;
+            head = elm;
         }
-        while (head != nullptr) {
-        if ((head->value.prior == elm->value.prior &&
-        (head->next == nullptr ||
-        head->next->value.prior < elm->value.prior))) {
-            elm->next = head->next;
-            head->next = elm;
-        } else {
-            if (head->value.prior > elm->value.prior) {
-                if ((head->next != nullptr &&
-                (head->next->value.prior < elm->value.prior))) {
-                    elm->next = head->next;
-                    head->next = elm;
-                } else {
-                    if (head->next == nullptr) {
-                        elm->next = head->next;
-                        head->next = elm;
-                    }
-                }
-            }
+        while (tail != nullptr) {
+        if ((tail->value.prior == elm->value.prior &&
+           (tail->next == nullptr ||
+            tail->next->value.prior < elm->value.prior)) ||
+           (tail->value.prior > elm->value.prior &&
+           ((tail->next != nullptr &&
+           tail->next->value.prior < elm->value.prior)||
+           (tail->next == nullptr)))) {
+          elm->next = tail->next;
+          tail->next = elm;
+          return;
         }
-        head = head->next;
-        }
+        tail = tail->next;
+      }
     }
 }
 };
