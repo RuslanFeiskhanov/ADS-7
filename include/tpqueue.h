@@ -37,12 +37,15 @@ void push(T symb) {
             tail = elm;
         }
         while (head != nullptr) {
-        if ((head->value.prior == elm->value.prior && (head->next == nullptr || head->next->value.prior < elm->value.prior))) {
+        if ((head->value.prior == elm->value.prior && 
+        (head->next == nullptr || 
+        head->next->value.prior < elm->value.prior))) {
             elm->next = head->next;
             head->next = elm;
         } else {
             if (head->value.prior > elm->value.prior) {
-                if ((head->next != nullptr && head->next->value.prior < elm->value.prior)) {
+                if ((head->next != nullptr &&
+                (head->next->value.prior < elm->value.prior))) {
                     elm->next = head->next;
                     head->next = elm;  
                 } else {
