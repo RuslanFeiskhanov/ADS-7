@@ -11,6 +11,7 @@ struct ITEM {
     ITEM* next;
 };
 ITEM* head;
+ITEM* tail;
 
  public:
     TPQueue() :head(nullptr), tail(nullptr) {}
